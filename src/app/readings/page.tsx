@@ -100,7 +100,7 @@ export default function ReadingsPage() {
                     <DatePickerWithRange setDate={setData} date={data} />
                     <TimescaleSelector value={timescale} onChange={setTimescale} />
                 </div>
-                <SensorSelector selected={selected} setSelected={setSelected} />
+                {/* <SensorSelector selected={selected} setSelected={setSelected} /> */}
             </div>
         </div>
         <Tabs defaultValue="charts">
