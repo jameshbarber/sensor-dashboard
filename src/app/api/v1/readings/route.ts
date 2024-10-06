@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     const url = new URL(req.url);
     
     // Fetch query params for limit, from, and to
-    const limit = parseInt(url.searchParams.get('limit')) || 2500;
+    const limit = parseInt(url?.searchParams?.get('limit') || "2500") ;
     const from = url.searchParams.get('from'); // Start date (greater than or equal)
     const to = url.searchParams.get('to');     // End date (less than or equal)
 
