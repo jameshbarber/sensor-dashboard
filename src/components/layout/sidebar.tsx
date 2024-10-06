@@ -1,11 +1,6 @@
 'use server'
 
 import Link from "next/link"
-import {
-  Cpu,
-  Gauge,
-  ThermometerIcon,
-} from "lucide-react"
 
 import { StatusIndicator } from "@/components/status"
 
@@ -13,6 +8,7 @@ import Image from "next/image"
 import Reading from "@/models/Reading"
 import Database from "@/services/database"
 import { Card, CardContent } from "../ui/card"
+import Navigation from "./nav"
 
 export default async function Sidebar() {
 
@@ -34,29 +30,7 @@ export default async function Sidebar() {
           </Button> */}
         </div>
         <div className="flex-1">
-          <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-            <Link
-              href="/"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <Gauge className="h-4 w-4" />
-              Dashboard
-            </Link>
-            <Link
-              href="/devices"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <Cpu className="h-4 w-4" />
-              Devices
-            </Link>
-            <Link
-              href="/readings"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-            >
-              <ThermometerIcon className="h-4 w-4" />
-              Readings
-            </Link>
-          </nav>
+          <Navigation className="grid items-start px-2 text-sm font-medium lg:px-4" />
         </div>
         <div className="mt-auto p-4">
           <Card x-chunk="dashboard-02-chunk-0">
