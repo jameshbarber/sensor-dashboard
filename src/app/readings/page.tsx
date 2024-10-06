@@ -1,7 +1,5 @@
 'use client'
 
-import { DataTable } from "@/components/ui/data-table";
-import { columns } from "./columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ReadingCharts from "./charts";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
@@ -111,7 +109,7 @@ export default function ReadingsPage() {
                 <TabsTrigger value="table">All Readings</TabsTrigger>
             </TabsList>
             <TabsContent value="charts">
-                <ReadingCharts devices={selected} from={data?.from} to={data?.to} timescale={timescale} />
+                <ReadingCharts from={data?.from} to={data?.to} timescale={timescale} />
             </TabsContent>
             <TabsContent value="table">
                 <div className="flex flex-1" x-chunk="dashboard-02-chunk-1">
