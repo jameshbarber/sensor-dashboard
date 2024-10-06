@@ -1,42 +1,59 @@
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import _mongoose, { connect } from "mongoose";
 
-var mongod: any;
-
-const getConnectionString = async () => {
-    var connectionString;
-    if (process.env.NODE_ENV === 'test') {
-        mongod = await MongoMemoryServer.create();
-        connectionString = mongod.getUri();
-    } else {
-        connectionString = process.env.MONGODBURL;
-    }
-    return connectionString
+declare global {
+  var mongoose: {
+    promise: ReturnType<typeof connect> | null;
+    conn: typeof _mongoose | null;
+  };
 }
 
-const connect = async () => {
-    const connectionString = await getConnectionString()
-    const connectionReady = mongoose.connections[0].readyState
+const MONGODB_URI = process.env.MONGODB_URI;
 
-    if (!connectionReady) {
-        await mongoose.connect(connectionString, {
-            // useUnifiedTopology: true,
-            // useNewUrlParser: true
-        })
-    }
+if (!MONGODB_URI || MONGODB_URI.length === 0) {
+  throw new Error("Please add your MongoDB URI to .env.local");
 }
 
-const close = async () => {
-    await mongoose.connection.close()
-    if (process.env.NODE_ENV === 'test') {
-        await mongod.stop()
-    }
+/**
+ * Global is used here to maintain a cached connection across hot reloads
+ * in development. This prevents connections from growing exponentially
+ * during API Route usage.
+ */
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-const Database = {
-    connect,
-    close
+async function connectDB() {
+  if (cached.conn) {
+    console.log("🚀 Using cached connection");
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = connect(MONGODB_URI!, opts)
+      .then((mongoose) => {
+        console.log("✅ New connection established");
+        return mongoose;
+      })
+      .catch((error) => {
+        console.error("❌ Connection to database failed");
+        throw error;
+      });
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
+  return cached.conn;
 }
 
-export default Database
-export { getConnectionString }
+export default connectDB;

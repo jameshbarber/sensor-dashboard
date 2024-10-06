@@ -1,16 +1,13 @@
 import Device from "@/models/Device";
-import Database from "@/services/database";
+import connectDB from "@/services/database";
 import dynamic from "next/dynamic";
 
 const ClientMap = dynamic(() => import('@/components/map'), { ssr: false });
 
 export default async function DevicePage() {
-
-
-    await Database.connect()
+    await connectDB()
     const devices = await Device.find().sort({ created: -1 })
 
-    console.log(devices)
     // await Database.close()
     const ds = devices.map(d => ({
         name: d._id,

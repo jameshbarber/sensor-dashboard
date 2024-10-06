@@ -1,19 +1,12 @@
-'use server'
-
 import Link from "next/link"
 
-import { StatusIndicator } from "@/components/status"
-
 import Image from "next/image"
-import Reading from "@/models/Reading"
-import Database from "@/services/database"
-import { Card, CardContent } from "../ui/card"
 import Navigation from "./nav"
 
-export default async function Sidebar() {
+export default function Sidebar() {
 
-  await Database.connect()
-  const readings = await Reading.find().sort({ created: -1 }).limit(1)
+  // await Database.connect()
+  // const readings = await Reading.find().sort({ created: -1 }).limit(1)
   // await Database.close()
 
   return (
@@ -33,11 +26,11 @@ export default async function Sidebar() {
           <Navigation className="grid items-start px-2 text-sm font-medium lg:px-4" />
         </div>
         <div className="mt-auto p-4">
-          <Card x-chunk="dashboard-02-chunk-0">
+          {/* <Card x-chunk="dashboard-02-chunk-0">
             <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
               <StatusIndicator date={readings[0].created} />
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       </div>
     </div>

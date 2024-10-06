@@ -1,26 +1,46 @@
-import { Button } from "@/components/ui/button"
-export const description =
-  "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action."
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
 
-export default function Dashboard() {
+import ReadingGraph from "@/components/readings"
+import DeviceCard from "@/components/devices"
+
+{/* <div>
+                {notifications.map((notification, index) => (
+                  <div
+                    key={index}
+                    className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+                  >
+                    <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {notification.title}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {notification.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div> */}
+
+export default async function Dashboard() {
   return (
     <>
       <div className="flex items-center">
         <h1 className="text-lg font-semibold md:text-2xl">All Sensors</h1>
       </div>
-      <div
-        className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1"
-      >
-        <div className="flex flex-col items-center gap-1 text-center">
-          <h3 className="text-2xl font-bold tracking-tight">
-            You have no products
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            You can start selling as soon as you add a product.
-          </p>
-          <Button className="mt-4">Add Product</Button>
-        </div>
-      </div>
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel>
+          <ReadingGraph />
+        </ResizablePanel>
+        <ResizableHandle style={{ marginLeft: "24px", marginRight: "24px" }} />
+        <ResizablePanel>
+          <DeviceCard />
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </>
   )
 }
