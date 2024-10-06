@@ -22,7 +22,7 @@ const ReadingGraph = () => {
             <CardDescription>Temperature & humidity</CardDescription>
         </CardHeader>
         <CardContent>
-            {data && <ReadingCharts data={data} />}
+            {data && <ReadingCharts/>}
         </CardContent>
     </Card>
 }
