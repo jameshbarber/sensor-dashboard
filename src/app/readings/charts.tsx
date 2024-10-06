@@ -11,7 +11,7 @@ const timescaleMap = {
     month: "MMM yyyy",
 }
 
-const mergedData = (data: Reading[], key: "temperature" | "humidity", timescale: Timescale) => {
+export const mergedData = (data: Reading[], key: "temperature" | "humidity", timescale: Timescale) => {
     let devices: string[] = []
     const mapped = data.map((reading: Reading) => {
         if (!devices.includes(reading?.device_id)) devices.push(reading?.device_id)
@@ -46,7 +46,7 @@ const mergedData = (data: Reading[], key: "temperature" | "humidity", timescale:
 
 }
 
-const DeviceLineCharts = ({ data, dataKey, timescale, deviceIds }: { deviceIds?: string[],data: Reading[], dataKey: "temperature" | "humidity", timescale: Timescale }) => {
+export const DeviceLineCharts = ({ data, dataKey, timescale, deviceIds }: { deviceIds?: string[],data: Reading[], dataKey: "temperature" | "humidity", timescale: Timescale }) => {
     const { readings, devices } = mergedData(data, dataKey, timescale)
     return <LineChart data={readings} lines={deviceIds ?? devices} />
 }
