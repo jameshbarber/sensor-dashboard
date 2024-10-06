@@ -11,6 +11,8 @@ export default async function DevicePage() {
     // await Database.close()
     const ds = devices.map(d => ({
         name: d._id,
+        shade: d.shade,
+        icon: d.shade ? "shade" : "no-shade",
         ...d.location
     }))
 

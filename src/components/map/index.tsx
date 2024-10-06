@@ -7,6 +7,7 @@ interface InternalFeatureSpec {
     icon: string;
     latitude: number;
     longitude: number;
+    shade: boolean;
 }
 
 interface MapProps {
@@ -19,6 +20,8 @@ interface MapProps {
     }
     dark?: boolean;
 }
+
+const MarkerIcon = () => <img src=""></img>
 
 const Map = ({ ...props }: MapProps) => {
 
@@ -43,18 +46,25 @@ const Map = ({ ...props }: MapProps) => {
             })
 
             mapbox.on("load", () => {
-                const markers = props.features.map((feature: InternalFeatureSpec) => {
-                    new mapboxgl.Marker({ color: "var(--color-brand)" })
+                props.features.forEach((feature: InternalFeatureSpec) => {
+                    const el = document.createElement('div');
+                    el.className = 'custom-marker';
+
+                    // Set the custom icon for the marker
+                    el.style.backgroundImage = `url(${"/" + feature.icon}.png)`;
+                    el.style.width = '32px';
+                    el.style.height = '32px';
+                    el.style.backgroundSize = 'cover';
+
+                    // Add the marker with the custom icon
+                    new mapboxgl.Marker(el)
                         .setLngLat([feature.longitude, feature.latitude])
-                        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                            .setHTML('<h3>' + feature.name + '</h3><p>' + feature + '</p>'))
+                        .setPopup(new mapboxgl.Popup({ offset: 25 })
+                            .setHTML('<h3>' + feature.name + '</h3>'))
                         .addTo(mapbox);
-                })
-                // const marker = new mapboxgl.Marker({ color: "var(--color-brand)" })
-                //     .setLngLat([lng, lat])
-                //     .addTo(mapbox);
-                setMb(true)
-            })
+                });
+                setMb(true);
+            });
         }
 
     }, [mb, coordinates, config, props?.dark])
