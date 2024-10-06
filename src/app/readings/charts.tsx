@@ -3,7 +3,6 @@ import LineChart from "@/components/charts";
 import { Reading } from "./columns";
 import { DateTime } from "luxon";
 import { useAPI } from "@/lib/useData";
-import { Timescale } from "./page";
 
 const timescaleMap = {
     hour: "MMM dd HH:00",
@@ -47,21 +46,21 @@ const mergedData = (data: Reading[], key: "temperature" | "humidity", timescale:
 
 }
 
-const DeviceLineCharts = ({ data, dataKey, timescale }: { data: Reading[], dataKey: "temperature" | "humidity", timescale: Timescale }) => {
-    const { readings, devices } = mergedData(data, dataKey, timescale)
-    return <LineChart data={readings} lines={devices} />
+const DeviceLineCharts = ({ data, dataKey, timescale, deviceIds }: { deviceIds: string[],data: Reading[], dataKey: "temperature" | "humidity", timescale: Timescale }) => {
+    const { readings } = mergedData(data, dataKey, timescale)
+    return <LineChart data={readings} lines={deviceIds} />
 }
 
-
-const ReadingCharts = ({ from, to, timescale }: { from: Date, to: Date, timescale: Timescale }) => {
+export type Timescale = "hour" | "day" | "week" | "month" | "year"
+const ReadingCharts = ({ from, to, timescale, devices }: { from: Date, to: Date, timescale: Timescale, devices: string[] }) => {
 
     const { data } = useAPI(`readings?from=${from?.toISOString()}&to=${to?.toISOString()}`)
 
     if (!data) return "Loading..."
 
     return <>
-        <DeviceLineCharts timescale={timescale} dataKey="temperature" data={data} />
-        <DeviceLineCharts timescale={timescale} dataKey="humidity" data={data} />
+        <DeviceLineCharts deviceIds={devices} timescale={timescale} dataKey="temperature" data={data} />
+        <DeviceLineCharts deviceIds={devices} timescale={timescale} dataKey="humidity" data={data} />
     </>
 }
 
