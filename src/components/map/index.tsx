@@ -21,8 +21,6 @@ interface MapProps {
     dark?: boolean;
 }
 
-const MarkerIcon = () => <img src=""></img>
-
 const Map = ({ ...props }: MapProps) => {
 
     const { config, coordinates } = props
@@ -38,8 +36,8 @@ const Map = ({ ...props }: MapProps) => {
             const { lat, lng } = coordinates
             const mapbox = new mapboxgl.Map({
                 container: 'map',
-                style: 'mapbox://styles/mapbox/' + (props?.dark ? 'dark' : 'light') + '-v10',
-                center: [lng, lat], // center map on Chad
+                style: "mapbox://styles/mapbox/standard-satellite",
+                center: [lng, lat],
                 zoom: 12,
                 pitch: 80,
                 ...config
