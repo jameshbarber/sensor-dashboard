@@ -1,5 +1,5 @@
 'use client'
-import mapboxgl, { GeoJSONFeature } from "mapbox-gl"
+import mapboxgl from "mapbox-gl"
 import { useEffect, useRef, useState } from 'react';
 
 interface InternalFeatureSpec {

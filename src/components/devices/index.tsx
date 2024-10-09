@@ -21,12 +21,13 @@ const ClientMap = dynamic(() => import('@/components/map'), { ssr: false });
 const DeviceCard = () => {
 
     const { data } = useAPI('devices')
-    // await Database.close()
 
     if (!data) return "Loading..."
 
     const ds = data?.map((d: any) => ({
         name: d._id,
+        shade: d.shade,
+        icon: d.shade ? "shade" : "no-shade",
         ...d.location
     }))
 
@@ -36,7 +37,7 @@ const DeviceCard = () => {
             <CardDescription>Assigned locations</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-            <ClientMap style={{ width: "100%", height: "250px" }} config={{ pitch: 0, zoom: 16 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={ds} />
+            <ClientMap style={{ width: "100%", height: "250px" }} config={{ pitch: 0, zoom: 12 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={ds} />
         </CardContent>
         <CardFooter>
             Last updated: {new Date().toLocaleString()}

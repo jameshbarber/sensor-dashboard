@@ -12,6 +12,8 @@ const timescaleMap = {
 }
 
 export const mergedData = (data: Reading[], key: "temperature" | "humidity", timescale: Timescale) => {
+    
+    // Here we turn all readings into an object where the key is the device ID and group the timestamps by the timescale
     let devices: string[] = []
     const mapped = data.map((reading: Reading) => {
         if (!devices.includes(reading?.device_id)) devices.push(reading?.device_id)
@@ -21,20 +23,36 @@ export const mergedData = (data: Reading[], key: "temperature" | "humidity", tim
         }
     })
 
+    // Here, we 
     let buckets: any[] = []
+    let bucketReadings: any = {}
+
     mapped.forEach((reading: any) => {
         const timestamp = reading?.timestamp
         const exists = buckets.find((b: any) => b.timestamp === timestamp)
 
         if (!!exists) {
-            console.log("exists", exists)
             const index = buckets.indexOf(exists)
             buckets[index] = {
                 ...buckets[index],
                 ...reading
             }
+            bucketReadings[timestamp] = [...bucketReadings[timestamp], reading]
         } else {
             buckets.push(reading)
+            bucketReadings[timestamp] = [reading]
+        }
+    })
+
+    // At this point, we have an array of objects for each timestamp bucket, with the last reading for each device
+    // We can now calculate the average for each timestamp bucket
+
+    buckets = buckets.map((bucket: any) => {
+        const values = bucketReadings[bucket.timestamp].map((r: any) => r[bucket[]])
+        const average = values.reduce((a: number, b: number) => a + b, 0) / values.length
+        return {
+            ...bucket,
+            [key]: average
         }
     })
 
