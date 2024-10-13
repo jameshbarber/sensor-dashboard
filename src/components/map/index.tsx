@@ -28,8 +28,9 @@ const Map = ({ ...props }: MapProps) => {
     const map = useRef(null);
     const [mb, setMb] = useState(false);
 
-    mapboxgl.accessToken = "pk.eyJ1Ijoic2FtYWxleGFuZGVybWFzdGVycyIsImEiOiJjbGcwanlrM2swdGhhM3BwOW94NWloOGF5In0.Wp0AP1IVbNwI6zkZ26U2Ag";
-
+    const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+    if (!token) throw new Error("Mapbox token not provided");
+    mapboxgl.accessToken = token
     useEffect(() => {
 
         if (coordinates && !mb) {

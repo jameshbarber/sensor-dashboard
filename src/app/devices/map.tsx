@@ -3,7 +3,7 @@ import { Device } from "./columns";
 
 const ClientMap = dynamic(() => import('@/components/map'), { ssr: false });
 
-export default function DeviceMap({ devices }: { devices: Device[] }) {
+export default function DeviceMap({ devices, ...props }: { devices: Device[], center: {lat: number, lng: number} }) {
 
     // await Database.close()
     const ds = devices.map(d => ({
@@ -17,7 +17,7 @@ export default function DeviceMap({ devices }: { devices: Device[] }) {
         className="flex flex-1 items-center justify-center" x-chunk="dashboard-02-chunk-1"
     >
         <div style={{ width: "100%" }}>
-            <ClientMap style={{ width: "100%" }} config={{ pitch: 0, zoom: 16 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={ds} />
+            <ClientMap  style={{ width: "100%" }} config={{ pitch: 0, zoom: 16 }} coordinates={props.center ?? { lat: -33.9575, lng: 18.4607 }} features={ds} {...props} />
         </div>
     </div>
 }

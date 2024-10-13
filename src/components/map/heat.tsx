@@ -55,7 +55,7 @@ const HeatmapLegend: React.FC<HeatmapLegendProps> = ({ minTemp, maxTemp }) => {
 const styles = {
     legendContainer: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'column' as "column",
         alignItems: 'center',
         marginTop: '10px',
         padding: '10px',
@@ -118,7 +118,10 @@ const HeatMap = ({ bounds, ...props }: MapProps) => {
     const map = useRef(null);
     const [mb, setMb] = useState(false);
 
-    mapboxgl.accessToken = "pk.eyJ1Ijoic2FtYWxleGFuZGVybWFzdGVycyIsImEiOiJjbGcwanlrM2swdGhhM3BwOW94NWloOGF5In0.Wp0AP1IVbNwI6zkZ26U2Ag";
+    const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+    if (!token) throw new Error("Mapbox token not provided");
+    mapboxgl.accessToken = token
+
     useEffect(() => {
 
         if (coordinates && !mb) {

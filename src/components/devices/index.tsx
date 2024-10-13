@@ -1,9 +1,5 @@
 'use client'
-import {
-    ResizableHandle,
-    ResizablePanel,
-    ResizablePanelGroup,
-} from "@/components/ui/resizable"
+
 import {
     Card,
     CardContent,
@@ -14,17 +10,14 @@ import {
 } from "@/components/ui/card"
 import dynamic from "next/dynamic"
 import { useAPI } from "@/lib/useData"
-import { DataTable } from "../ui/data-table"
+import { Device } from "@/app/devices/columns"
 
 const ClientMap = dynamic(() => import('@/components/map'), { ssr: false });
 
-const DeviceCard = () => {
 
-    const { data } = useAPI('devices')
+export const DeviceMap = ({devices}: {devices: Device[]}) => {
 
-    if (!data) return "Loading..."
-
-    const ds = data?.map((d: any) => ({
+    const ds = devices?.map((d: Device) => ({
         name: d._id,
         shade: d.shade,
         icon: d.shade ? "shade" : "no-shade",
@@ -37,7 +30,7 @@ const DeviceCard = () => {
             <CardDescription>Assigned locations</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-            <ClientMap style={{ width: "100%", height: "250px" }} config={{ pitch: 0, zoom: 12 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={ds} />
+            <ClientMap style={{ width: "100%", height: "250px" }} config={{ pitch: 0, zoom: 12 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={devices ? ds : []} />
         </CardContent>
         <CardFooter>
             Last updated: {new Date().toLocaleString()}
@@ -45,4 +38,13 @@ const DeviceCard = () => {
     </Card>
 }
 
-export default DeviceCard
+const WrappedDeviceMap = () => {
+    const { data } = useAPI('devices')
+    if (!data) return "Loading..."
+
+    return <DeviceMap devices={data} />
+}
+
+
+
+export default WrappedDeviceMap
