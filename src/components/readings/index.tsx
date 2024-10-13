@@ -9,14 +9,7 @@ import {
 } from "@/components/ui/card"
 import { useAPI } from "@/lib/useData"
 import { useState } from "react"
-import SimpleLineChart from "../charts/simple"
-import { mergedData, Timescale } from "@/app/readings/charts"
-import { Reading } from "@/app/readings/columns"
-
-const DeviceLineCharts = ({ data, dataKey, timescale, deviceIds }: { deviceIds?: string[], data: Reading[], dataKey: "temperature" | "humidity", timescale: Timescale }) => {
-    const { readings, devices } = mergedData(data, dataKey, timescale)
-    return <SimpleLineChart data={readings} lines={deviceIds ?? devices} />
-}
+import { DeviceLineCharts } from "@/app/readings/charts"
 
 const HumidityChart = () => {
 
@@ -25,7 +18,7 @@ const HumidityChart = () => {
         to: new Date()
     })
 
-    const { data } = useAPI(`readings?from=${dates.from?.toISOString()}&to=${dates.to?.toISOString()}`)
+    const { data } = useAPI(`readings/humidity?from=${dates.from?.toISOString()}&to=${dates.to?.toISOString()}&scale=hour`)
 
 
     return <Card>
@@ -35,7 +28,7 @@ const HumidityChart = () => {
         </CardHeader>
         <CardContent style={{ minHeight: "250px", width: "100%" }}>
             <div style={{ height: "250px", width: "100%" }}>
-                {data && <DeviceLineCharts timescale="hour" dataKey="humidity" data={data} />}
+                {data && <DeviceLineCharts data={data}  />}
             </div>
         </CardContent>
     </Card>
@@ -48,7 +41,7 @@ const TemperatureChart = () => {
             to: new Date()
         })
     
-        const { data } = useAPI(`readings?from=${dates.from?.toISOString()}&to=${dates.to?.toISOString()}`)
+        const { data } = useAPI(`readings/temperature?from=${dates.from?.toISOString()}&to=${dates.to?.toISOString()}&scale=hour`)
     
         return <Card>
             <CardHeader>
@@ -57,7 +50,7 @@ const TemperatureChart = () => {
             </CardHeader>
             <CardContent style={{ minHeight: "250px", width: "100%" }}>
                 <div style={{ height: "250px", width: "100%" }}>
-                    {data && <DeviceLineCharts timescale="hour" dataKey="temperature" data={data} />}
+                    {data && <DeviceLineCharts data={data} />}
                 </div>
             </CardContent>
         </Card>

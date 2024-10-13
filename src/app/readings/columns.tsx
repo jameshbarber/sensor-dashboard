@@ -19,7 +19,7 @@ export const columns: ColumnDef<Reading>[] = [
   {
     accessorKey: "created",
     header: "Timestamp",
-    cell: (item) => DateTime.fromMillis(Number(item.getValue())).toRelative()
+    cell: (item) => DateTime.fromMillis(Number(item.getValue())).toFormat("yyyy-MM-dd HH:mm:ss"),
   },
   {
     accessorKey: "device_id",
@@ -28,9 +28,11 @@ export const columns: ColumnDef<Reading>[] = [
   {
     accessorKey: "data.temperature",
     header: "Temperature",
+    cell: (item) => `${item.getValue()} °C`,
   },
   {
     accessorKey: "data.humidity",
     header: "Humidity",
+    cell: (item) => `${item.getValue()}%`,
   },
 ]

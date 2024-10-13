@@ -25,8 +25,8 @@ export default async function DevicePage() {
         <div
             className="flex flex-1 items-center justify-center" x-chunk="dashboard-02-chunk-1"
         >
-            <div style={{ width: "100%"}}>
-                <ClientMap style={{ width: "100%"}} config={{ pitch: 0, zoom: 16 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={featureJSON} />
+            <div style={{ width: "100%" }}>
+                <ClientMap style={{ width: "100%" }} config={{ pitch: 0, zoom: 16 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={featureJSON} />
             </div>
         </div>
     </>
