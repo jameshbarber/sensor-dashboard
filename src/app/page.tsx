@@ -11,13 +11,13 @@ export default async function Dashboard() {
   return (
     <>
       <div className="flex items-center">
-        <h1 className="text-lg font-semibold md:text-2xl">All Sensors</h1>
+        <h1 className="text-lg font-semibold md:text-2xl">Dashboard</h1>
       </div>
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
           <div className="flex flex-col gap-2">
-          <TemperatureChart></TemperatureChart>
-          <HumidityChart></HumidityChart>
+            <TemperatureChart height={200}></TemperatureChart>
+            <HumidityChart></HumidityChart>
           </div>
         </ResizablePanel>
         <ResizableHandle style={{ marginLeft: "24px", marginRight: "24px" }} />

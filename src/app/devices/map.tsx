@@ -6,8 +6,6 @@ const ClientMap = dynamic(() => import('@/components/map'), { ssr: false });
 
 export default function DeviceMap({ devices, loading, ...props }: { devices: Device[], center?: { lat: number, lng: number }, loading?: boolean }) {
 
-
-
     if (loading) return <Skeleton className="w-full h-[80vh]" />
 
     const ds = devices.map(d => ({

@@ -16,7 +16,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/ui/code-block";
-
+import FreshnessIndicator from "@/components/ui/freshness-indicator";
+import CopyButton from "@/components/ui/copy-button";
 
 const WebhookInstructionSection = ({ id }: { id: string }) => {
 
@@ -29,7 +30,8 @@ const WebhookInstructionSection = ({ id }: { id: string }) => {
                 <p className="text-sm text-gray-500">Send data to this device using the following webhook URL</p>
             </div>
             <div className="flex items-center justify-center gap-2">
-                <Input className="border-none" value={`${origin}/api/v1/devices/${id}/hook`} disabled style={{ cursor: "auto" }} /><Button variant='ghost'>Copy</Button>
+                <Input className="border-none" value={`${origin}/api/v1/devices/${id}/hook`} disabled style={{ cursor: "auto" }} />
+                <CopyButton data={`${origin}/api/v1/devices/${id}/hook`} />
             </div>
 
             <div className="text-left">
@@ -57,7 +59,7 @@ export default function DevicesPage({ params }: { params: { id: string } }) {
         <div className="flex items-center justify-between">
             <div>
                 <h1 className="text-lg font-semibold md:text-2xl">{device?._id}</h1>
-                <p className="text-sm text-gray-500">Last seen {lastSeen}</p>
+                <FreshnessIndicator date={readings?.[0]?.created} />
             </div>
             <div className="flex gap-2">
                 <div className="flex gap-2">
