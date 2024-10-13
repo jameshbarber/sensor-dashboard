@@ -11,5 +11,5 @@ export async function POST(req: Request, { params }: { params: { id: string } })
         created: Date.now()
     })
 
-    return { status: 200, body: { message: "Received data" } }
+    return new Response("ok", { status: 201 })
 }

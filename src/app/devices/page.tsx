@@ -70,7 +70,7 @@ const AddSensorFeature = ({ data, onChange, onSubmit }: { data: FormDataType, on
                         <Input
                             onChange={(e) => onChange("_id", e.target.value)}
                             id="_id"
-                            value={data._id}
+                            value={data?._id}
                             placeholder="sensor_2"
                             className="col-span-3"
                         />
@@ -150,7 +150,7 @@ export default function DevicesPage() {
             </TabsContent>
             <TabsContent value="table">
                 <div className="flex w-full">
-                    <DataTable columns={columns} data={data} />
+                    <DataTable loading={!data} columns={columns} data={data} />
                 </div>
             </TabsContent>
         </Tabs>
