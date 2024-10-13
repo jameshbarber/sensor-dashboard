@@ -140,13 +140,13 @@ export default function DevicesPage() {
                 {/* <SensorSelector selected={selected} setSelected={setSelected} /> */}
             </div>
         </div>
-        <Tabs defaultValue={"map"}>
-            <TabsList>
-                <TabsTrigger value="map">Map</TabsTrigger>
+        <Tabs defaultValue={"table"}>
+            <TabsList className="mb-2">
                 <TabsTrigger value="table">Table</TabsTrigger>
+                <TabsTrigger value="map">Map</TabsTrigger>
             </TabsList>
             <TabsContent value="map">
-                {data && <DeviceMap devices={data}></DeviceMap>}
+                <DeviceMap loading={!data} devices={data}></DeviceMap>
             </TabsContent>
             <TabsContent value="table">
                 <div className="flex w-full">

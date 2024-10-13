@@ -12,6 +12,38 @@ import {
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "@/app/readings/columns";
 import DeviceMap from "../map";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import CodeBlock from "@/components/ui/code-block";
+
+
+const WebhookInstructionSection = ({ id }: { id: string }) => {
+
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
+
+    return <div>
+        <Card className="p-4 p-y-4 border-dashed shadow-none text-center flex flex-col gap-4">
+            <div>
+                <h3 className="text-lg font-semibold">Sending data</h3>
+                <p className="text-sm text-gray-500">Send data to this device using the following webhook URL</p>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+                <Input className="border-none" value={`${origin}/api/v1/devices/${id}/hook`} disabled style={{ cursor: "auto" }} /><Button variant='ghost'>Copy</Button>
+            </div>
+
+            <div className="text-left">
+                Payload example:
+                <CodeBlock code={`
+{
+    "temperature": 23.5,
+    "humidity": 45.2
+}
+`} />
+            </div>
+        </Card>
+    </div>
+}
 
 export default function DevicesPage({ params }: { params: { id: string } }) {
 
@@ -29,20 +61,19 @@ export default function DevicesPage({ params }: { params: { id: string } }) {
             </div>
             <div className="flex gap-2">
                 <div className="flex gap-2">
-
                 </div>
-                {/* <SensorSelector selected={selected} setSelected={setSelected} /> */}
             </div>
         </div>
         <ResizablePanelGroup direction="horizontal">
             <ResizablePanel>
                 <div className="flex flex-col gap-2">
-                    {readings && <DataTable data={readings} columns={columns} />}
+                    {readings && readings.length && <DataTable data={readings} columns={columns} />}
+                    <WebhookInstructionSection id={params.id} />
                 </div>
             </ResizablePanel>
             <ResizableHandle style={{ marginLeft: "24px", marginRight: "24px" }} />
             <ResizablePanel>
-                {device && <DeviceMap center={{ lat:device?.location?.latitude, lng: device?.location?.longitude }} devices={[device]} />}
+                {device && <DeviceMap center={{ lat: device?.location?.latitude, lng: device?.location?.longitude }} devices={[device]} />}
             </ResizablePanel>
         </ResizablePanelGroup>
     </>

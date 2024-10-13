@@ -31,6 +31,8 @@ const Map = ({ ...props }: MapProps) => {
     const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
     if (!token) throw new Error("Mapbox token not provided");
     mapboxgl.accessToken = token
+
+
     useEffect(() => {
 
         if (coordinates && !mb) {
@@ -71,7 +73,7 @@ const Map = ({ ...props }: MapProps) => {
 
     if (!coordinates) return "Can't load map"
 
-    return <div className="map-container" id='map-container' ref={mapContainer} >
+    return <div className="map-container bg-gray-100" id='map-container' ref={mapContainer} >
         <div className="map" style={{ height: "640px", ...props?.style }} id='map' ref={map}></div>
     </div>
 }

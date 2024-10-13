@@ -4,10 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ReadingCharts from "./charts";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import { useState } from "react";
-import { HeatmapLegend } from "@/components/map/heat";
-
-
-const ClientMap = dynamic(() => import('@/components/map/heat'), { ssr: false });
 
 import {
     Select,
@@ -29,7 +25,6 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import dynamic from "next/dynamic";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 
@@ -93,75 +88,12 @@ const SensorSelector = ({ setSelected, selected }: { setSelected: (s: string[]) 
 }
 
 
-const HeatMap = ({ from, to, timescale }: { from: Date, to: Date, timescale: Timescale }) => {
-    const { data } = useAPI(`readings/temperature?from=${from?.toISOString()}&to=${to?.toISOString()}&scale=${timescale}`)
-    const { data: deviceData } = useAPI(`devices`)
-
-    if (!data || !deviceData) return "Loading..."
-
-    const { devices, readings } = data
-
-    const mapped = devices.map((device_id: any) => {
-
-        const device = deviceData.find((d: any) => d._id === device_id)
-        // Loop through the readings and aggregate temp for given device
-        let sum = 0;
-        let count = 0;
-
-        console.log("Device", device_id)
-        for (let i = 0; i < readings.length; i++) {
-            console.log(readings[i])
-            if (readings[i][device_id]) {
-                console.log("Foudn a reading for", device_id, readings[i][device_id])
-                sum += readings[i][device_id]
-                count++
-            }
-        }
-
-        const avg = sum / count
-
-        console.log("The average", avg)
-
-        return {
-            id: device.id,
-            temperature: avg,
-            shade: device.shade,
-            icon: device.shade ? "shade" : "no-shade",
-            ...device.location
-        }
-    })
-
-    let maxTemp = 0;
-    let minTemp = 0;
-
-    for (let i = 0; i < mapped.length; i++) {
-        if (!maxTemp || !minTemp) {
-            maxTemp = mapped[i].temperature;
-            minTemp = mapped[i].temperature;
-        }
-        if (mapped[i].temperature > maxTemp) maxTemp = mapped[i].temperature;
-        if (mapped[i].temperature < minTemp) minTemp = mapped[i].temperature;
-    }
-
-    console.log(maxTemp, minTemp)
-
-    return <>
-        <h1 className="">Temperature Heat Map</h1>
-        <HeatmapLegend maxTemp={maxTemp + 5} minTemp={minTemp - 5} />
-
-        {data && <ClientMap bounds={{max: maxTemp + 5, min: minTemp - 5}} style={{ width: "100%" }} config={{ pitch: 0, zoom: 16 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={mapped} />}
-    </>
-}
-
-
 const Table = ({ from, to }: { from: Date, to: Date }) => {
 
     const { data } = useAPI(`readings?from=${from?.toISOString()}&to=${to?.toISOString()}`)
 
-    if (!data) return "Loading..."
-
     return <div className="flex w-full">
-        <DataTable columns={columns} data={data} />
+        <DataTable loading={!data} columns={columns} data={data} />
     </div>
 }
 
@@ -206,7 +138,6 @@ export default function ReadingsPage() {
             <TabsList>
                 <TabsTrigger value="charts">Charts</TabsTrigger>
                 <TabsTrigger value="table">Table</TabsTrigger>
-                {/* <TabsTrigger value="map">Map</TabsTrigger> */}
             </TabsList>
             <TabsContent value="charts">
                 <ReadingCharts temperature={temperatureReadings} humidity={humidityReadings} />
@@ -214,9 +145,6 @@ export default function ReadingsPage() {
             <TabsContent value="table">
                 <Table {...data}></Table>
             </TabsContent>
-            {/* <TabsContent value="map">
-                <HeatMap {...data} timescale={timescale}></HeatMap>
-            </TabsContent> */}
         </Tabs>
 
     </>

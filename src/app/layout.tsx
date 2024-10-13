@@ -28,10 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link
-      href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css"
-      rel="stylesheet"
-    />
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -39,7 +39,7 @@ export default function RootLayout({
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
           <Sidebar />
           <div className="flex flex-col">
-            <Header/>
+            {/* <Header /> */}
             <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
               {children}
             </main>

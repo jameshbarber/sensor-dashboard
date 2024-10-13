@@ -18,14 +18,17 @@ import {
 } from "@/components/ui/table"
 
 import { Button } from "@/components/ui/button"
+import { Skeleton } from "../skeleton"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  loading?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
+  loading,
   data,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
@@ -34,6 +37,8 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
+
+  if (loading) return <Skeleton className="w-full h-[400px]" />
 
   return (
     <div className="w-full">
