@@ -61,7 +61,7 @@ const Map = ({ ...props }: MapProps) => {
                     new mapboxgl.Marker(el)
                         .setLngLat([feature.longitude, feature.latitude])
                         .setPopup(new mapboxgl.Popup({ offset: 25 })
-                            .setHTML('<h3>' + feature.name + '</h3>'))
+                            .setHTML('<a href="/devices/' + feature.name + '">' + feature.name + '</a>'))
                         .addTo(mapbox);
                 });
                 setMb(true);

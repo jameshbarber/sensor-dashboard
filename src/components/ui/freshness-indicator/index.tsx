@@ -7,11 +7,8 @@ const FreshnessIndicator = ({ date }: { date: number }) => {
         <div>No data</div>
     </div>
 
-    const dt = DateTime.fromMillis(date ?? 0)
-    const now = DateTime.now()
-
-    const diff = now.diff(dt, ["days", "hours", "minutes"])
-    const isFresh = diff.minutes < 15
+    const dt = DateTime.fromMillis(date)
+    const isFresh = Date.now() - date < 15 * 60 * 1000
 
     return <div className="flex items-center space-x-2">
         <div className={`w-2 h-2 rounded-full ${isFresh ? "bg-green-500" : "bg-red-500"}`}></div>

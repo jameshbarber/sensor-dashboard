@@ -53,7 +53,7 @@ export default function DevicesPage({ params }: { params: { id: string } }) {
     const { data: readings } = useAPI(`devices/${params.id}/readings`)
 
     const latestReading = readings?.[0]
-    const lastSeen = latestReading && DateTime.fromMillis(latestReading.created).toRelative()
+    const seenLessThan15MinutesAgo = DateTime.fromISO(latestReading?.created).diffNow().minutes < 15
 
     return <>
         <div className="flex items-center justify-between">
@@ -69,8 +69,8 @@ export default function DevicesPage({ params }: { params: { id: string } }) {
         <ResizablePanelGroup direction="horizontal">
             <ResizablePanel>
                 <div className="flex flex-col gap-2">
-                    {readings && readings.length && <DataTable data={readings} columns={columns} />}
-                    <WebhookInstructionSection id={params.id} />
+                    {!seenLessThan15MinutesAgo && <WebhookInstructionSection id={params.id} />}
+                    <DataTable data={readings} columns={columns} loading={!readings} />
                 </div>
             </ResizablePanel>
             <ResizableHandle style={{ marginLeft: "24px", marginRight: "24px" }} />
