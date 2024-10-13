@@ -43,7 +43,7 @@ To get started, you need to set up a database and deploy a copy of the dashboard
 
 To deploy this project to Vercel, click the button below:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/import?repository-url=https://github.com/your-repo-url)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/import?repository-url=https://github.com/jameshbarber/sensor-dashboard)
 
 
 ### 2. Set Up MongoDB with Atlas
@@ -84,7 +84,7 @@ NEXT_PUBLIC_MAPBOX_API_KEY=pk.eyJ1IjoibWFwYm94dXNlciIsImEiOiJjanB1N25hYWUwMDAzM3
 
 ## Development Setup
 
-1. Clone the repository to your local machine. `git clone https://github.com/your-repo-url.git`
+1. Clone the repository to your local machine. `git clone https://github.com/jameshbarber/sensor-dashboard.git`
 2. Install dependencies by running `yarn`.
 3. Create a local .env file by running `touch .env.local`
 4. Paste in the environment variables in the form of the example below. You can also use the Vercel CLI to pull the environment variables from the dashboard. 
