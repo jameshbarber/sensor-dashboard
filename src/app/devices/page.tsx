@@ -1,33 +1,42 @@
-import Device from "@/models/Device";
-import connectDB from "@/services/database";
-import dynamic from "next/dynamic";
+'use client'
 
-const ClientMap = dynamic(() => import('@/components/map'), { ssr: false });
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-export default async function DevicePage() {
-    await connectDB()
-    const devices = await Device.find().sort({ created: -1 })
+import { useAPI } from "@/lib/useData";
 
-    // await Database.close()
-    const ds = devices.map(d => ({
-        name: d._id,
-        shade: d.shade,
-        icon: d.shade ? "shade" : "no-shade",
-        ...d.location
-    }))
+import { Button } from "@/components/ui/button";
+import DeviceMap from "./map";
+import { DataTable } from "@/components/ui/data-table";
+import { columns } from "./columns";
 
-    const featureJSON = JSON.parse(JSON.stringify(ds))
+export default function DevicesPage() {
+
+    const { data } = useAPI('devices')
 
     return <>
-        <div className="flex items-center">
+        <div className="flex items-center justify-between">
             <h1 className="text-lg font-semibold md:text-2xl">Devices</h1>
-        </div>
-        <div
-            className="flex flex-1 items-center justify-center" x-chunk="dashboard-02-chunk-1"
-        >
-            <div style={{ width: "100%" }}>
-                <ClientMap style={{ width: "100%" }} config={{ pitch: 0, zoom: 16 }} coordinates={{ lat: -33.9575, lng: 18.4607 }} features={featureJSON} />
+            <div className="flex gap-2">
+                <div className="flex gap-2">
+                    {/* <Button onClick={() => setTab("map")}>Add Sensor</Button> */}
+                </div>
+                {/* <SensorSelector selected={selected} setSelected={setSelected} /> */}
             </div>
         </div>
+        <Tabs defaultValue={"map"}>
+            <TabsList>
+                <TabsTrigger value="map">Map</TabsTrigger>
+                <TabsTrigger value="table">Table</TabsTrigger>
+            </TabsList>
+            <TabsContent value="map">
+                {data && <DeviceMap devices={data}></DeviceMap>}
+            </TabsContent>
+            <TabsContent value="table">
+                <div className="flex w-full">
+                    <DataTable columns={columns} data={data} />
+                </div>
+            </TabsContent>
+        </Tabs>
+
     </>
 }
