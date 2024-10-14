@@ -15,6 +15,7 @@ If you are interested in using this for your own temperature/humidity project, y
 - [Usage](#usage)
   - [Creating a new Device](#creating-a-new-device)
   - [Viewing aggregated data](#viewing-agreggated-data)
+  - [API Endpoints](#api-endpoints)
 - [Development Setup](#development-setup)
 - [Contributing](#contributing)
 - [License](#license)
@@ -91,7 +92,30 @@ You can add a device (that is, add it to the map and list) by visiting the [Devi
 ### Viewing aggregated data
 In order to make the date selector meaningful, we agreggate readings by the scale you select in the top right on the [Readings](https://sam-sensor-dashboard.vercel.app/readings) page. 
 
+### API Endpoints
+The API endpoints are located in the `/api/v1` directory. They can be used to progrematically interact with the data from another system. 
 
+#### `/api/v1/devices/route.ts`
+- **Endpoint**: `/api/v1/devices`
+- **Methods**: 
+  - `GET`: Fetch all devices, sorted by creation date.
+  - `POST`: Add a new device. Requires `_id` and `location` fields in the request body.
+- **Source**: [src/app/api/v1/devices/route.ts](https://github.com/jameshbarber/sensor-dashboard/blob/dfb883d5217a44d47a668101f7ae1cb398d3e472/src/app/api/v1/devices/route.ts)
+
+#### `/api/v1/devices/[id]/hook/route.ts`
+- **Endpoint**: `/api/v1/devices/[id]/hook`
+- **Method**: `POST` - Record a new reading for a device. Requires `humidity` and `temperature` fields in the request body.
+- **Source**: [src/app/api/v1/devices/[id]/hook/route.ts](https://github.com/jameshbarber/sensor-dashboard/blob/dfb883d5217a44d47a668101f7ae1cb398d3e472/src/app/api/v1/devices/[id]/hook/route.ts)
+
+#### `/api/v1/devices/[id]/readings/route.ts`
+- **Endpoint**: `/api/v1/devices/[id]/readings`
+- **Method**: `GET` - Fetch readings for a specific device, sorted by creation date.
+- **Source**: [src/app/api/v1/devices/[id]/readings/route.ts](https://github.com/jameshbarber/sensor-dashboard/blob/dfb883d5217a44d47a668101f7ae1cb398d3e472/src/app/api/v1/devices/[id]/readings/route.ts)
+
+#### `/api/v1/readings/[type]/route.ts`
+- **Endpoint**: `/api/v1/readings/[type]`
+- **Method**: `GET` - Fetch aggregated readings based on type (e.g., temperature, humidity). Supports filtering by date range and timescale (hour, day, week, month).
+- **Source**: [src/app/api/v1/readings/[type]/route.ts](https://github.com/jameshbarber/sensor-dashboard/blob/dfb883d5217a44d47a668101f7ae1cb398d3e472/src/app/api/v1/readings/[type]/route.ts)
 
 ## Development Setup
 
