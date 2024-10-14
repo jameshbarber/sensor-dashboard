@@ -93,7 +93,7 @@ You can add a device (that is, add it to the map and list) by visiting the [Devi
 In order to make the date selector meaningful, we agreggate readings by the scale you select in the top right on the [Readings](https://sam-sensor-dashboard.vercel.app/readings) page. 
 
 ### Sending data from a sensor
-To send data, you need to make a `POST` request to `/api/v1/readings/hook`. You do not need to configure the device first. [Learn more](#-api-v1-devices-[id]-hook-route.ts)
+To send data, you need to make a `POST` request to `/api/v1/readings/hook`. You do not need to configure the device first. [Learn more](#apiv1devicesidreadingsroutets)
 
 ### API Endpoints
 The API endpoints are located in the `/api/v1` directory. They can be used to progrematically interact with the data from another system. 
