@@ -2,6 +2,8 @@
 
 This project is a fully-featured sensor data dashboard built to visualize and analyze sensor data in real-time. The dashboard is designed to work seamlessly with sensors connected to The Things Network, but ultimately accepts data via webhooks, making it flexible for various use cases.
 
+If you are interested in using this for your own temperature/humidity project, you can easily [Deploy to Vercel](#deploy-to-vercel) and [Set Up MongoDB with Atlas](#set-up-mongodb-with-atlas) with no coding knowledge.
+
 ## Table of Contents
 - [Features](#features)
 - [Tech Stack](#tech-stack)
