@@ -100,7 +100,11 @@ NEXT_PUBLIC_MAPBOX_API_KEY=pk.eyJ1IjoibWFwYm94dXNlciIsImEiOiJjanB1N25hYWUwMDAzM3
 
 ## Usage
 
-(Include screenshots or GIFs of the dashboard in action here.)
+### Creating a new Device
+You can add a device (that is, add it to the map and list) by visiting the [Devices](https://sam-sensor-dashboard.vercel.app/devices) clicking the button in the top right. Any readings with the associated device ID will be matched and linked. 
+
+### Viewing aggregated data
+In order to make the date selector meaningful, we agreggate readings by the scale you select in the top right on the [Readings](https://sam-sensor-dashboard.vercel.app/readings) page. 
 
 ## Contributing
 
