@@ -12,7 +12,7 @@ The dashboard focuses on two key entities:
   
 - **Easy Filtering by Date**: Filter readings by specific date ranges to narrow down the data you want to analyze. This makes it simple to zoom in on specific time periods.
   
-- **Aggregation by Bucket (Day, Week, Month)**: Aggregate sensor readings into different time buckets, allowing you to view trends and patterns on a daily, weekly, or monthly basis.
+- **Aggregation by Bucket (Hour, Day, Week, Month)**: Aggregate sensor readings into different time buckets, allowing you to view trends and patterns on a hourly, daily, weekly, or monthly basis.
   
 - **View Readings in Charts or as a Table**: Choose to visualize sensor readings using interactive charts for a clear overview of trends, or view them as a table for detailed data analysis.
 
