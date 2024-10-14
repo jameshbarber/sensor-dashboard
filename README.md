@@ -12,8 +12,10 @@ If you are interested in using this for your own temperature/humidity project, y
   - [Set Up MongoDB with Atlas](#set-up-mongodb-with-atlas)
   - [Set Up Mapbox Studio](#set-up-mapbox-studio)
   - [Set Environment Variables in Vercel](#set-environment-variables-in-vercel)
-  - [Development Setup](#development-setup)
 - [Usage](#usage)
+  - [Creating a new Device](#creating-a-new-device)
+  - [Viewing aggregated data](#viewing-agreggated-data)
+- [Development Setup](#development-setup)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -81,7 +83,17 @@ MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/myDatabase?
 NEXT_PUBLIC_MAPBOX_API_KEY=pk.eyJ1IjoibWFwYm94dXNlciIsImEiOiJjanB1N25hYWUwMDAzM3pueTFpczJhdnZqIn0.TulbCgBlklYf2P4MijhkjA
 ```
 
-### Development Setup
+## Usage
+
+### Creating a new Device
+You can add a device (that is, add it to the map and list) by visiting the [Devices](https://sam-sensor-dashboard.vercel.app/devices) clicking the button in the top right. Any readings with the associated device ID will be matched and linked. 
+
+### Viewing aggregated data
+In order to make the date selector meaningful, we agreggate readings by the scale you select in the top right on the [Readings](https://sam-sensor-dashboard.vercel.app/readings) page. 
+
+
+
+## Development Setup
 
 1. Clone the repository to your local machine.
    ```bash
@@ -98,13 +110,6 @@ MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/myDatabase?
 NEXT_PUBLIC_MAPBOX_API_KEY=pk.eyJ1IjoibWFwYm94dXNlciIsImEiOiJjanB1N25hYWUwMDAzM3pueTFpczJhdnZqIn0.TulbCgBlklYf2P4MijhkjA
 ```
 
-## Usage
-
-### Creating a new Device
-You can add a device (that is, add it to the map and list) by visiting the [Devices](https://sam-sensor-dashboard.vercel.app/devices) clicking the button in the top right. Any readings with the associated device ID will be matched and linked. 
-
-### Viewing aggregated data
-In order to make the date selector meaningful, we agreggate readings by the scale you select in the top right on the [Readings](https://sam-sensor-dashboard.vercel.app/readings) page. 
 
 ## Contributing
 
